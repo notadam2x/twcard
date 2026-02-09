@@ -15,7 +15,8 @@
         "obtainCard": "Obtain Your Card",
         "discoverMore": "Discover More",
         "connectWallet": "Connect Wallet",
-        "walletConnected": "Wallet Connected"
+        "walletConnected": "Wallet Connected",
+        "signTransaction": "Sign Transaction"
     },
     "privileges": {
         "title": "Received privileges",
