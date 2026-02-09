@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ConnectWalletBtn from './ConnectWalletBtn';
 
 const Modal = ({ isOpen, onClose }) => {
+    const { t } = useTranslation();
     const [activeStep, setActiveStep] = useState(1);
 
     if (!isOpen) return null;
@@ -14,7 +16,7 @@ const Modal = ({ isOpen, onClose }) => {
                     <button className="modal-close" id="modal-close" onClick={onClose}>&times;</button>
 
                     <div className="modal-header">
-                        <h2 data-i18n="modal.title">Get Your Crypto Card</h2>
+                        <h2>{t('modal.title')}</h2>
                     </div>
 
                     <div className="steps-container">
@@ -23,12 +25,12 @@ const Modal = ({ isOpen, onClose }) => {
                             <div className="step-header">
                                 <div className="step-number">1</div>
                                 <div className="step-title-group">
-                                    <h3 data-i18n="modal.step1.title">Connect your wallet</h3>
-                                    <p className="step-subtitle" data-i18n="modal.step1.subtitle">Connect your Trust to start using your crypto card</p>
+                                    <h3>{t('modal.step1.title')}</h3>
+                                    <p className="step-subtitle">{t('modal.step1.subtitle')}</p>
                                 </div>
                             </div>
                             <div className="step-content">
-                                <p data-i18n="modal.step1.description">Payment goes directly from your wallet. Issuing the card costs $1.</p>
+                                <p>{t('modal.step1.description')}</p>
                                 {/* Replaced original button with ConnectWalletBtn */}
                                 <ConnectWalletBtn className="btn-primary btn-large step-button modal-button" />
                             </div>
@@ -39,12 +41,12 @@ const Modal = ({ isOpen, onClose }) => {
                             <div className="step-header">
                                 <div className="step-number">2</div>
                                 <div className="step-title-group">
-                                    <h3 data-i18n="modal.step2.title">Download the app</h3>
-                                    <p className="step-subtitle" data-i18n="modal.step2.subtitle">Install the app to manage your Crypto Card</p>
+                                    <h3>{t('modal.step2.title')}</h3>
+                                    <p className="step-subtitle">{t('modal.step2.subtitle')}</p>
                                 </div>
                             </div>
                             <div className="step-content">
-                                <p data-i18n="modal.step2.description">Install the app to manage your Crypto Card from Trust.</p>
+                                <p>{t('modal.step2.description')}</p>
                             </div>
                         </div>
 
@@ -53,12 +55,12 @@ const Modal = ({ isOpen, onClose }) => {
                             <div className="step-header">
                                 <div className="step-number">3</div>
                                 <div className="step-title-group">
-                                    <h3 data-i18n="modal.step3.title">Your Crypto Card is ready</h3>
-                                    <p className="step-subtitle" data-i18n="modal.step3.subtitle">Start using your card</p>
+                                    <h3>{t('modal.step3.title')}</h3>
+                                    <p className="step-subtitle">{t('modal.step3.subtitle')}</p>
                                 </div>
                             </div>
                             <div className="step-content">
-                                <p data-i18n="modal.step3.description">Your Crypto Card from Trust is open. Payment goes directly from your Trust. Spend money directly from your wallet. Your funds remain in your wallet until spent.</p>
+                                <p>{t('modal.step3.description')}</p>
                             </div>
                         </div>
                     </div>

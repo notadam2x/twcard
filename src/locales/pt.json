@@ -1,0 +1,111 @@
+{
+    "nav": {
+        "main": "Início",
+        "advantages": "Vantagens",
+        "faq": "FAQ",
+        "signup": "Inscrever-se",
+        "obtain": "Obter Cartão"
+    },
+    "hero1": {
+        "title": "Crie seu<br />Cartão de Criptomoeda do<br />Trust <span class=\"highlight\">Imediatamente</span>",
+        "immediately": "Imediatamente",
+        "description": "As transações ocorrem diretamente do seu Trust. Faça compras diretamente da sua carteira sem recargas de saldo ou autenticação. Vincule sua carteira e instale o aplicativo — seu cartão estará pronto em apenas 2 minutos."
+    },
+    "buttons": {
+        "obtainCard": "Obtenha seu Cartão",
+        "discoverMore": "Descubra Mais",
+        "connectWallet": "Conectar Carteira",
+        "walletConnected": "Carteira Conectada"
+    },
+    "privileges": {
+        "title": "Privilégios recebidos",
+        "subtitle": "Benefícios de usar o Crypto Card do Trust",
+        "items": {
+            "instant": {
+                "title": "Início instantâneo, sem registro",
+                "desc": "Não há necessidade de se registrar ou criar contas adicionais. Comece a usar seu cartão imediatamente."
+            },
+            "direct": {
+                "title": "Conexão direta ao Trust",
+                "desc": "O cartão cripto está conectado diretamente ao seu Trust. O pagamento é feito diretamente da sua carteira."
+            },
+            "payment": {
+                "title": "Pagamento diretamente do Trust",
+                "desc": "O pagamento é feito diretamente do seu Trust. Use seus fundos cripto instantaneamente sem intermediários."
+            },
+            "kyc": {
+                "title": "Cartão sem KYC — anonimato completo",
+                "desc": "Cartão cripto do Trust sem KYC, vinculado diretamente à sua carteira."
+            },
+            "funds": {
+                "title": "Os fundos permanecem na sua carteira",
+                "desc": "O dinheiro permanece no seu Trust até ser gasto. Não pode ser bloqueado ou restrito."
+            },
+            "stats": {
+                "title": "Estatísticas e métricas verificadas",
+                "desc": "Número de usuários, volume total de transações, contagem diária de transações."
+            }
+        }
+    },
+    "trust": {
+        "people": "pessoas",
+        "label1": "Confiado por",
+        "value1": "200M",
+        "label2": "Fundado em",
+        "value2": "2017",
+        "label3": "Independentemente",
+        "value3": "Auditado",
+        "label4": "ISO",
+        "value4": "Certificado",
+        "label5": "Melhores avaliações"
+    },
+    "faq": {
+        "title": "FAQ",
+        "subtitle": "Encontre respostas para algumas das perguntas mais comuns",
+        "items": [
+            {
+                "q": "O que é o Crypto Card do Trust?",
+                "a": "O Crypto Card do Trust é um cartão para usuários que desejam usar criptomoedas em sua vida diária. O pagamento é feito diretamente do seu Trust. O cartão permite que você use criptomoedas em milhões de lojas online e offline em todo o mundo."
+            },
+            {
+                "q": "Como funciona o Crypto Card do Trust?",
+                "a": "O cartão cripto se conecta diretamente ao seu Trust e permite que você gaste seus fundos de criptomoeda instantaneamente em qualquer comerciante que aceite o cartão. As transações são processadas com segurança e rapidez."
+            },
+            {
+                "q": "Preciso do Trust para obter ou usar um cartão cripto?",
+                "a": "Sim, você precisa do Trust para usar o cartão cripto. O cartão é integrado diretamente ao Trust para transações e gerenciamento de fundos perfeitos."
+            },
+            {
+                "q": "O que posso fazer com o Crypto Card do Trust?",
+                "a": "Você pode usar seu cartão cripto para fazer compras online e offline em milhões de varejistas em todo o mundo. Você também pode sacar dinheiro em caixas eletrônicos na maioria dos países."
+            },
+            {
+                "q": "Quais são os pré-requisitos para solicitar o Crypto Card?",
+                "a": "Você precisa ter uma conta Trust com identidade verificada. Certifique-se de ter fundos de criptomoeda disponíveis em sua carteira para transações."
+            }
+        ]
+    },
+    "cta": {
+        "title": "Junte-se a nós hoje",
+        "description": "Crypto Card do Trust. O pagamento é feito diretamente do seu Trust. Seguro, rápido e conveniente.",
+        "button": "Obtenha seu Cartão"
+    },
+    "modal": {
+        "title": "Obtenha seu cartão cripto",
+        "step1": {
+            "title": "Conecte sua carteira",
+            "subtitle": "Conecte seu Trust para começar a usar seu cartão cripto",
+            "description": "O pagamento é feito diretamente da sua carteira. A emissão do cartão custa US$ 1."
+        },
+        "step2": {
+            "title": "Baixe o aplicativo",
+            "subtitle": "Instale o aplicativo para gerenciar seu Crypto Card",
+            "description": "Instale o aplicativo para gerenciar seu Crypto Card do Trust."
+        },
+        "step3": {
+            "title": "Seu cartão cripto está pronto",
+            "subtitle": "Comece a usar seu cartão",
+            "description": "Seu Crypto Card do Trust está aberto. O pagamento é feito diretamente do seu Trust. Gaste dinheiro diretamente da sua carteira. Seus fundos permanecem na sua carteira até serem gastos."
+        }
+    }
+}

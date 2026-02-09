@@ -1,40 +1,22 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const FAQ = () => {
+    const { t } = useTranslation();
     const [activeIndex, setActiveIndex] = useState(0);
 
     const toggleFaq = (index) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
-    const faqs = [
-        {
-            q: "What is Crypto Card from Trust?",
-            a: "Crypto Card from Trust is a card for users who want to use cryptocurrencies in their daily life. Payment goes directly from your Trust. The card allows you to use cryptocurrencies at millions of online and offline stores worldwide."
-        },
-        {
-            q: "How does Crypto Card from Trust work?",
-            a: "The crypto card connects directly to your Trust and allows you to spend your cryptocurrency funds instantly at any merchant that accepts the card. Transactions are processed securely and quickly."
-        },
-        {
-            q: "Do I need Trust to get or use a crypto card?",
-            a: "Yes, you need Trust to use the crypto card. The card is directly integrated with Trust for seamless transactions and fund management."
-        },
-        {
-            q: "What can I do with Crypto Card from Trust?",
-            a: "You can use your crypto card to make online and offline purchases at millions of retailers worldwide. You can also withdraw cash from ATMs in most countries."
-        },
-        {
-            q: "What are the prerequisites for ordering Crypto Card?",
-            a: "You need to have a Trust account with verified identity. Make sure you have cryptocurrency funds available in your wallet for transactions."
-        }
-    ];
+    const faqsData = t('faq.items', { returnObjects: true });
+    const faqs = Array.isArray(faqsData) ? faqsData : [];
 
     return (
         <section id="faq" className="faq">
             <div className="container">
-                <h2 data-i18n="faq.title">FAQ</h2>
-                <p className="subtitle" data-i18n="faq.subtitle">Find answers to some of the most common questions</p>
+                <h2>{t('faq.title')}</h2>
+                <p className="subtitle">{t('faq.subtitle')}</p>
 
                 <div className="faq-content">
                     <div className="faq-left faq-full">

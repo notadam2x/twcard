@@ -16,8 +16,12 @@
     "@tronweb3/tronwallet-adapter-tronlink": "^1.1.13",
     "@tronweb3/tronwallet-adapter-walletconnect": "^3.0.2",
     "buffer": "^6.0.3",
+    "i18next": "^25.8.4",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "i18next-http-backend": "^3.0.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-i18next": "^16.5.4",
     "tronweb": "^6.2.0",
     "vite-plugin-node-polyfills": "^0.25.0"
   },

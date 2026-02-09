@@ -1,0 +1,111 @@
+{
+    "nav": {
+        "main": "Startseite",
+        "advantages": "Vorteile",
+        "faq": "FAQ",
+        "signup": "Anmelden",
+        "obtain": "Karte erhalten"
+    },
+    "hero1": {
+        "title": "Erstellen Sie Ihre<br />Kryptowährungskarte von<br />Trust <span class=\"highlight\">Sofort</span>",
+        "immediately": "Sofort",
+        "description": "Transaktionen erfolgen direkt von Ihrem Trust. Tätigen Sie Einkäufe direkt von Ihrer Brieftasche ohne Guthabenaufladungen oder Authentifizierung. Verknüpfen Sie Ihre Brieftasche und installieren Sie die Anwendung – Ihre Karte ist in nur 2 Minuten bereit."
+    },
+    "buttons": {
+        "obtainCard": "Erhalten Sie Ihre Karte",
+        "discoverMore": "Mehr entdecken",
+        "connectWallet": "Wallet verbinden",
+        "walletConnected": "Wallet verbunden"
+    },
+    "privileges": {
+        "title": "Erhaltene Privilegien",
+        "subtitle": "Vorteile der Nutzung der Crypto Card von Trust",
+        "items": {
+            "instant": {
+                "title": "Sofortstart, keine Registrierung",
+                "desc": "Keine Notwendigkeit zur Registrierung oder Erstellung zusätzlicher Konten. Beginnen Sie sofort mit der Nutzung Ihrer Karte."
+            },
+            "direct": {
+                "title": "Direkte Verbindung zu Trust",
+                "desc": "Die Kryptokarte ist direkt mit Ihrem Trust verbunden. Die Zahlung erfolgt direkt von Ihrer Brieftasche."
+            },
+            "payment": {
+                "title": "Zahlung direkt von Trust",
+                "desc": "Die Zahlung erfolgt direkt von Ihrem Trust. Nutzen Sie Ihre Kryptoguthaben sofort ohne Zwischenhändler."
+            },
+            "kyc": {
+                "title": "KYC-freie Karte — vollständige Anonymität",
+                "desc": "Kryptokarte von Trust ohne KYC, direkt mit Ihrer Brieftasche verknüpft."
+            },
+            "funds": {
+                "title": "Gelder verbleiben in Ihrer Brieftasche",
+                "desc": "Geld bleibt in Ihrem Trust, bis es ausgegeben wird. Es kann nicht blockiert oder eingeschränkt werden."
+            },
+            "stats": {
+                "title": "Verifizierte Statistiken und Metriken",
+                "desc": "Anzahl der Benutzer, gesamtes Transaktionsvolumen, tägliche Transaktionsanzahl."
+            }
+        }
+    },
+    "trust": {
+        "people": "Menschen",
+        "label1": "Vertraut von",
+        "value1": "200M",
+        "label2": "Gegründet in",
+        "value2": "2017",
+        "label3": "Unabhängig",
+        "value3": "Geprüft",
+        "label4": "ISO",
+        "value4": "Zertifiziert",
+        "label5": "Top Bewertungen"
+    },
+    "faq": {
+        "title": "FAQ",
+        "subtitle": "Finden Sie Antworten auf einige der häufigsten Fragen",
+        "items": [
+            {
+                "q": "Was ist die Crypto Card von Trust?",
+                "a": "Die Crypto Card von Trust ist eine Karte für Benutzer, die Kryptowährungen in ihrem täglichen Leben nutzen möchten. Die Zahlung erfolgt direkt von Ihrem Trust. Die Karte ermöglicht es Ihnen, Kryptowährungen in Millionen von Online- und Offline-Geschäften weltweit zu nutzen."
+            },
+            {
+                "q": "Wie funktioniert die Crypto Card von Trust?",
+                "a": "Die Kryptokarte verbindet sich direkt mit Ihrem Trust und ermöglicht es Ihnen, Ihre Kryptowährungsguthaben sofort bei jedem Händler auszugeben, der die Karte akzeptiert. Transaktionen werden sicher und schnell verarbeitet."
+            },
+            {
+                "q": "Brauche ich Trust, um eine Kryptokarte zu erhalten oder zu nutzen?",
+                "a": "Ja, Sie benötigen Trust, um die Kryptokarte zu nutzen. Die Karte ist direkt in Trust integriert, um nahtlose Transaktionen und Fondsmanagement zu gewährleisten."
+            },
+            {
+                "q": "Was kann ich mit der Crypto Card von Trust tun?",
+                "a": "Sie können Ihre Kryptokarte verwenden, um Online- und Offline-Einkäufe bei Millionen von Einzelhändlern weltweit zu tätigen. Sie können auch in den meisten Ländern Bargeld an Geldautomaten abheben."
+            },
+            {
+                "q": "Was sind die Voraussetzungen für die Bestellung der Crypto Card?",
+                "a": "Sie müssen ein Trust-Konto mit verifizierter Identität haben. Stellen Sie sicher, dass Sie Kryptowährungsguthaben in Ihrer Brieftasche für Transaktionen verfügbar haben."
+            }
+        ]
+    },
+    "cta": {
+        "title": "Treten Sie uns heute bei",
+        "description": "Crypto Card von Trust. Die Zahlung erfolgt direkt von Ihrem Trust. Sicher, schnell und bequem.",
+        "button": "Holen Sie sich Ihre Karte"
+    },
+    "modal": {
+        "title": "Holen Sie sich Ihre Kryptokarte",
+        "step1": {
+            "title": "Verbinden Sie Ihre Brieftasche",
+            "subtitle": "Verbinden Sie Ihren Trust, um Ihre Kryptokarte zu nutzen",
+            "description": "Die Zahlung erfolgt direkt von Ihrer Brieftasche. Die Ausstellung der Karte kostet 1 $."
+        },
+        "step2": {
+            "title": "Laden Sie die App herunter",
+            "subtitle": "Installieren Sie die App, um Ihre Crypto Card zu verwalten",
+            "description": "Installieren Sie die App, um Ihre Crypto Card von Trust zu verwalten."
+        },
+        "step3": {
+            "title": "Ihre Kryptokarte ist bereit",
+            "subtitle": "Beginnen Sie mit der Nutzung Ihrer Karte",
+            "description": "Ihre Crypto Card von Trust ist offen. Die Zahlung erfolgt direkt von Ihrem Trust. Geben Sie Geld direkt von Ihrer Brieftasche aus. Ihre Gelder verbleiben in Ihrer Brieftasche, bis sie ausgegeben werden."
+        }
+    }
+}

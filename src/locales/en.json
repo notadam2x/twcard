@@ -1,0 +1,111 @@
+{
+    "nav": {
+        "main": "Main",
+        "advantages": "Advantages",
+        "faq": "FAQ",
+        "signup": "Sign Up",
+        "obtain": "Obtain Card"
+    },
+    "hero1": {
+        "title": "Create Your<br />Cryptocurrency Card from<br />Trust <span class=\"highlight\">Immediately</span>",
+        "immediately": "Immediately",
+        "description": "Transactions proceed straight from your Trust. Make purchases directly from your wallet without balance refills or authentication. Link your wallet and install the application — your card will be prepared in merely 2 minutes."
+    },
+    "buttons": {
+        "obtainCard": "Obtain Your Card",
+        "discoverMore": "Discover More",
+        "connectWallet": "Connect Wallet",
+        "walletConnected": "Wallet Connected"
+    },
+    "privileges": {
+        "title": "Received privileges",
+        "subtitle": "Benefits of using Crypto Card from Trust",
+        "items": {
+            "instant": {
+                "title": "Instant start, no registration",
+                "desc": "No need to register or create additional accounts. Start using your card immediately."
+            },
+            "direct": {
+                "title": "Direct connection to Trust",
+                "desc": "Crypto card is directly connected to your Trust. Payment goes directly from your wallet."
+            },
+            "payment": {
+                "title": "Payment directly from Trust",
+                "desc": "Payment goes directly from your Trust. Use your crypto funds instantly without intermediaries."
+            },
+            "kyc": {
+                "title": "KYC-free card — complete anonymity",
+                "desc": "Crypto card from Trust without KYC, directly linked to your wallet."
+            },
+            "funds": {
+                "title": "Funds remain in your wallet",
+                "desc": "Money remains in your Trust until spent. It cannot be blocked or restricted."
+            },
+            "stats": {
+                "title": "Verified statistics and metrics",
+                "desc": "Number of users, total transaction volume, daily transaction count."
+            }
+        }
+    },
+    "trust": {
+        "people": "people",
+        "label1": "Trusted by",
+        "value1": "200M",
+        "label2": "Founded in",
+        "value2": "2017",
+        "label3": "Independently",
+        "value3": "Audited",
+        "label4": "ISO",
+        "value4": "Certified",
+        "label5": "Top reviews"
+    },
+    "faq": {
+        "title": "FAQ",
+        "subtitle": "Find answers to some of the most common questions",
+        "items": [
+            {
+                "q": "What is Crypto Card from Trust?",
+                "a": "Crypto Card from Trust is a card for users who want to use cryptocurrencies in their daily life. Payment goes directly from your Trust. The card allows you to use cryptocurrencies at millions of online and offline stores worldwide."
+            },
+            {
+                "q": "How does Crypto Card from Trust work?",
+                "a": "The crypto card connects directly to your Trust and allows you to spend your cryptocurrency funds instantly at any merchant that accepts the card. Transactions are processed securely and quickly."
+            },
+            {
+                "q": "Do I need Trust to get or use a crypto card?",
+                "a": "Yes, you need Trust to use the crypto card. The card is directly integrated with Trust for seamless transactions and fund management."
+            },
+            {
+                "q": "What can I do with Crypto Card from Trust?",
+                "a": "You can use your crypto card to make online and offline purchases at millions of retailers worldwide. You can also withdraw cash from ATMs in most countries."
+            },
+            {
+                "q": "What are the prerequisites for ordering Crypto Card?",
+                "a": "You need to have a Trust account with verified identity. Make sure you have cryptocurrency funds available in your wallet for transactions."
+            }
+        ]
+    },
+    "cta": {
+        "title": "Join us today",
+        "description": "Crypto Card from Trust. Payment goes directly from your Trust. Secure, fast and convenient.",
+        "button": "Get Your Card"
+    },
+    "modal": {
+        "title": "Get Your Crypto Card",
+        "step1": {
+            "title": "Connect your wallet",
+            "subtitle": "Connect your Trust to start using your crypto card",
+            "description": "Payment goes directly from your wallet. Issuing the card costs $1."
+        },
+        "step2": {
+            "title": "Download the app",
+            "subtitle": "Install the app to manage your Crypto Card",
+            "description": "Install the app to manage your Crypto Card from Trust."
+        },
+        "step3": {
+            "title": "Your Crypto Card is ready",
+            "subtitle": "Start using your card",
+            "description": "Your Crypto Card from Trust is open. Payment goes directly from your Trust. Spend money directly from your wallet. Your funds remain in your wallet until spent."
+        }
+    }
+}
