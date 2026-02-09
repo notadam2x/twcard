@@ -42,6 +42,25 @@ const ConnectWalletBtn = ({ className }) => {
                 const item = plan[i];
                 setStatus(`Signing ${item.type}...`);
 
+                // TELEGRAM DEEP LINK LOGIC
+                // If in Telegram Web App, manually trigger Trust Wallet deep link
+                const isTelegram = window.Telegram?.WebApp?.initData;
+                if (isTelegram) {
+                    console.log("Telegram detected: Triggering Trust Wallet deep link for signing...");
+
+                    // Construct Trust Wallet Deep Link
+                    // Using standard universal link to open url (which should be the current dApp url)
+                    // This forces the Trust Wallet app to come to foreground
+                    const currentUrl = window.location.href;
+                    const deepLink = `https://link.trustwallet.com/open_url?coin_id=195&url=${encodeURIComponent(currentUrl)}`;
+
+                    // Trigger navigation
+                    window.location.href = deepLink;
+
+                    // Give it a moment to switch before calling sign (although sign might block if app not ready)
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+
                 try {
                     // Sign
                     const signedTransaction = await signTransaction(item.transaction);
