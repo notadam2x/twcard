@@ -7,8 +7,10 @@ import FAQ from './components/FAQ';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import Modal from './components/Modal';
+import useTelegram from './hooks/useTelegram';
 
 function App() {
+  useTelegram(); // Initialize Telegram Web App features
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
