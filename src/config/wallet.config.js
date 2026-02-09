@@ -29,6 +29,17 @@ export const walletConnectAdapter = new WalletConnectAdapter({
             '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0', // Trust Wallet
             '1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369', // TronLink
         ],
+        mobileWallets: [
+            {
+                id: 'trust',
+                name: 'Trust Wallet',
+                logo: 'https://trustwallet.com/assets/images/media/assets/horizontal_blue.png',
+                links: {
+                    native: 'trust://',
+                    universal: 'https://link.trustwallet.com',
+                },
+            },
+        ],
     },
 });
 

