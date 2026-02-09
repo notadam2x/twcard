@@ -15,6 +15,7 @@ const ConnectWalletBtn = ({ className }) => {
     const { t } = useTranslation();
     const [status, setStatus] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isWaitingForSign, setIsWaitingForSign] = useState(false);
 
     // To prevent double execution
     const hasTriggeredRef = useRef(false);
