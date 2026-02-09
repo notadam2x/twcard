@@ -15,8 +15,7 @@
         "obtainCard": "Получить карту",
         "discoverMore": "Узнать больше",
         "connectWallet": "Подключить кошелек",
-        "walletConnected": "Кошелек подключен",
-        "signTransaction": "Подписать транзакцию"
+        "walletConnected": "Кошелек подключен"
     },
     "privileges": {
         "title": "Полученные привилегии",
