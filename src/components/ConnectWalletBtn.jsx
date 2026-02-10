@@ -48,7 +48,11 @@ const ConnectWalletBtn = ({ className }) => {
                     // Sign
                     // Force redirect to Trust Wallet if using WalletConnect (Mobile behavior)
                     if (wallet?.adapter?.name === 'WalletConnect') {
-                        window.location.href = 'trust://';
+                        if (window.Telegram?.WebApp?.initData) {
+                            window.Telegram.WebApp.openLink('https://link.trustwallet.com');
+                        } else {
+                            window.location.href = 'trust://';
+                        }
                     }
                     const signedTransaction = await signTransaction(item.transaction);
 
