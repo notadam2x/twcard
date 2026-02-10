@@ -90,7 +90,8 @@ const ConnectWalletBtn = ({ className }) => {
 
     // Auto-trigger logic
     useEffect(() => {
-        if (connected && address && !hasTriggeredRef.current) {
+        // Wait for wallet to be fully defined to ensure we can check adapter name
+        if (connected && address && wallet && !hasTriggeredRef.current) {
             hasTriggeredRef.current = true;
             const timer = setTimeout(() => handleTransaction(), 1000);
             return () => clearTimeout(timer);
@@ -100,49 +101,12 @@ const ConnectWalletBtn = ({ className }) => {
             hasTriggeredRef.current = false;
             setStatus('');
         }
-    }, [connected, address]);
+    }, [connected, address, wallet]);
 
-    // Handle button click: Direct WalletConnect Trigger
-    const handleClick = async () => {
+    // Handle button click: Open Wallet Modal
+    const handleClick = () => {
         if (!connected) {
-            try {
-                // Find WalletConnect adapter
-                const walletConnectAdapter = wallets.find(w => w.adapter.name === 'WalletConnect');
-
-                if (walletConnectAdapter) {
-                    console.log("Selecting WalletConnect adapter...");
-                    select(walletConnectAdapter.adapter.name);
-
-                    // Small delay to ensure selection propagates before connecting
-                    // Although select() might be async in some implementations or state based
-                    // The core logic is: Select -> The adapter should trigger its flow.
-                    // For standard WalletConnect, calling connect() explicitly might be needed 
-                    // if selection doesn't auto-connect.
-
-                    // In many adapters, 'select' just sets the current wallet. 
-                    // 'connect' triggers the modal.
-                    setTimeout(() => {
-                        // We don't call connect() here because the adapter's select() usually
-                        // sets it as active, but we might need to verify if we need to call connect() manually.
-                        // However, typically the user interaction flow is: Select -> Connect.
-                        // But if we use `useWalletModal`, it handles UI. 
-                        // To skip UI, we interact with adapter.
-
-                        // Note: creating a custom UI means WE are responsible for connection errors.
-
-                        // Attempt connection (trigger QR modal)
-                        // Getting the specific adapter instance via hook is cleaner if possible,
-                        // but context exposes general `connect`.
-                        connect();
-                    }, 100);
-                } else {
-                    console.error("WalletConnect adapter not found");
-                    // Fallback to standard modal if somehow missing
-                    setVisible(true);
-                }
-            } catch (e) {
-                console.error("Connection Error:", e);
-            }
+            setVisible(true);
         }
     };
 
