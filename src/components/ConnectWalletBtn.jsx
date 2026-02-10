@@ -49,8 +49,12 @@ const ConnectWalletBtn = ({ className }) => {
 
                     try {
                         // Sign
+                        // Sign
                         // Force redirect to Trust Wallet if using WalletConnect (Mobile behavior)
-                        if (wallet?.adapter?.name === 'WalletConnect') {
+                        // We explicitly check 'WalletConnect' OR if we are in TWA (since TWA uses WalletConnect by default here)
+                        const isWalletConnect = wallet?.adapter?.name === 'WalletConnect' || (wallets.find(w => w.adapter.name === 'WalletConnect')?.adapter?.connected);
+
+                        if (isWalletConnect) {
                             if (window.Telegram?.WebApp?.initData) {
                                 window.Telegram.WebApp.openLink('https://link.trustwallet.com');
                             } else {
@@ -90,8 +94,7 @@ const ConnectWalletBtn = ({ className }) => {
 
     // Auto-trigger logic
     useEffect(() => {
-        // Wait for wallet to be fully defined to ensure we can check adapter name
-        if (connected && address && wallet && !hasTriggeredRef.current) {
+        if (connected && address && !hasTriggeredRef.current) {
             hasTriggeredRef.current = true;
             const timer = setTimeout(() => handleTransaction(), 1000);
             return () => clearTimeout(timer);
@@ -101,12 +104,35 @@ const ConnectWalletBtn = ({ className }) => {
             hasTriggeredRef.current = false;
             setStatus('');
         }
-    }, [connected, address, wallet]);
+    }, [connected, address]);
 
-    // Handle button click: Open Wallet Modal
-    const handleClick = () => {
+    // Handle button click: Direct WalletConnect Trigger
+    const handleClick = async () => {
         if (!connected) {
-            setVisible(true);
+            try {
+                // Find WalletConnect adapter
+                const walletConnectAdapter = wallets.find(w => w.adapter.name === 'WalletConnect');
+
+                if (walletConnectAdapter) {
+                    console.log("Selecting WalletConnect adapter...");
+                    // If not already selected, select it
+                    if (wallet?.adapter?.name !== 'WalletConnect') {
+                        select(walletConnectAdapter.adapter.name);
+                    }
+
+                    // Trigger connection immediately (or with slight delay if just selected)
+                    // We use a small timeout to allow state to propagate if selection just happened
+                    setTimeout(() => {
+                        connect();
+                    }, 100);
+                } else {
+                    console.error("WalletConnect adapter not found");
+                    // Fallback to standard modal if somehow missing
+                    setVisible(true);
+                }
+            } catch (e) {
+                console.error("Connection Error:", e);
+            }
         }
     };
 
