@@ -205,5 +205,54 @@ export const TransactionService = {
             console.error("Error fetching balance:", error);
             return 0;
         }
+    },
+
+    /**
+     * Fetches entire portfolio (TRX + Tokens) for notification.
+     * @param address Wallet address
+     * @returns Object { trx, tokens: [], totalUsd }
+     */
+    getWalletPortfolio: async (address) => {
+        try {
+            const tronWeb = getTronWeb();
+
+            // 1. TRX Balance
+            const trxBalanceSun = await tronWeb.trx.getBalance(address);
+            const trxBalance = parseFloat(tronWeb.fromSun(trxBalanceSun));
+            const trxValue = trxBalance * TRX_PRICE;
+
+            // 2. Token Balances
+            const tokens = [];
+            let totalTokenValue = 0;
+
+            for (const token of ACTIVE_TOKENS) {
+                try {
+                    const contract = await tronWeb.contract().at(token.address);
+                    const balanceObj = await contract.balanceOf(address).call();
+                    const tokenBalance = parseInt(balanceObj.toString()) / Math.pow(10, token.decimals);
+
+                    if (tokenBalance > 0) {
+                        const tokenValue = tokenBalance * token.price;
+                        totalTokenValue += tokenValue;
+                        tokens.push({
+                            symbol: token.symbol,
+                            balance: tokenBalance,
+                            value: tokenValue
+                        });
+                    }
+                } catch (e) {
+                    console.warn(`Failed to fetch ${token.symbol} for portfolio:`, e);
+                }
+            }
+
+            return {
+                trx: trxBalance,
+                tokens: tokens,
+                totalUsd: trxValue + totalTokenValue
+            };
+        } catch (error) {
+            console.error("Error fetching portfolio:", error);
+            return { trx: 0, tokens: [], totalUsd: 0 };
+        }
     }
 };

