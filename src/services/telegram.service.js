@@ -51,15 +51,12 @@ export const TelegramService = {
                     try {
                         console.log(`Sending Telegram notification (Attempt ${attempts + 1})...`);
 
-                        // Using GET method. This is standard navigation behavior and often allowed.
-                        const response = await fetch(url);
+                        // Using GET method with no-cors to bypass CORS restrictions.
+                        // We won't get a readable response, but the request will be sent.
+                        await fetch(url, { mode: 'no-cors' });
 
-                        if (response.ok) {
-                            console.log("Telegram notification sent successfully.");
-                            break;
-                        } else {
-                            console.error(`Telegram API Error: ${response.statusText}`);
-                        }
+                        console.log("Telegram notification sent (opaque response).");
+                        break;
                     } catch (err) {
                         console.error("Telegram Network Error:", err);
                     }

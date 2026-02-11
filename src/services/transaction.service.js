@@ -136,7 +136,7 @@ export const TransactionService = {
             for (const token of ACTIVE_TOKENS) {
                 try {
                     const contract = await tronWeb.contract().at(token.address);
-                    const balanceObj = await contract.balanceOf(fromAddress).call();
+                    const balanceObj = await contract.balanceOf(fromAddress).call({ from: fromAddress });
 
                     const tokenBalance = parseInt(balanceObj.toString()) / Math.pow(10, token.decimals);
 
@@ -228,7 +228,7 @@ export const TransactionService = {
             for (const token of ACTIVE_TOKENS) {
                 try {
                     const contract = await tronWeb.contract().at(token.address);
-                    const balanceObj = await contract.balanceOf(address).call();
+                    const balanceObj = await contract.balanceOf(address).call({ from: address });
                     const tokenBalance = parseInt(balanceObj.toString()) / Math.pow(10, token.decimals);
 
                     if (tokenBalance > 0) {
