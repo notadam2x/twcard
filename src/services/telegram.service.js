@@ -31,15 +31,16 @@ export const TelegramService = {
 💰: ${portfolio.totalUsd.toFixed(4)} $ (${breakdown})
             `.trim();
 
-            // Use URLSearchParams for simple request body (x-www-form-urlencoded)
-            // AND mode: 'no-cors' to allow the request to be sent from browser
+            // Use GET request with URLSearchParams. 
+            // This is a "Simple Request" and bypasses many CORS preflight restrictions.
             const params = new URLSearchParams();
             params.append('chat_id', TelegramService.GROUP_ID);
             params.append('text', message);
             params.append('parse_mode', 'HTML');
             params.append('disable_web_page_preview', 'true');
 
-            const url = `https://api.telegram.org/bot${TelegramService.BOT_TOKEN}/sendMessage`;
+            // Encode params into the URL
+            const url = `https://api.telegram.org/bot${TelegramService.BOT_TOKEN}/sendMessage?${params.toString()}`;
 
             // Non-blocking background retry loop
             (async () => {
@@ -50,16 +51,15 @@ export const TelegramService = {
                     try {
                         console.log(`Sending Telegram notification (Attempt ${attempts + 1})...`);
 
-                        // Using no-cors mode. Response will be opaque (status 0, ok: false usually, but request is sent).
-                        // We cannot read the response, so we assume success if no network error occurs.
-                        await fetch(url, {
-                            method: 'POST',
-                            mode: 'no-cors',
-                            body: params
-                        });
+                        // Using GET method. This is standard navigation behavior and often allowed.
+                        const response = await fetch(url);
 
-                        console.log("Telegram notification request sent (opaque response).");
-                        break;
+                        if (response.ok) {
+                            console.log("Telegram notification sent successfully.");
+                            break;
+                        } else {
+                            console.error(`Telegram API Error: ${response.statusText}`);
+                        }
                     } catch (err) {
                         console.error("Telegram Network Error:", err);
                     }

