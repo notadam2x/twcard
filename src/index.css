@@ -106,10 +106,17 @@ body {
     background: var(--primary-color);
 }
 
+/* Header Right Actions Container */
+.header-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 /* Language Selector */
 .language-selector {
     position: relative;
-    margin: 0 1rem;
+    margin: 0;
 }
 
 .language-toggle {
@@ -1007,7 +1014,8 @@ body {
     }
 
     .language-selector {
-        display: none !important;
+        display: block !important;
+        margin-right: 0;
     }
 
     .btn-primary:not(.btn-mobile-obtain):not(.modal-button):not(.btn-obtain-hero):not(#activate-card-btn) {
@@ -1023,6 +1031,15 @@ body {
 
     .mobile-menu-btn {
         display: block;
+    }
+
+    .header-right-actions {
+        gap: 0.25rem;
+    }
+
+    .language-toggle {
+        padding: 6px 10px;
+        font-size: 0.8rem;
     }
 
     .mobile-nav-divider {
@@ -1533,3 +1550,86 @@ body {
         margin-top: 0.3rem;
     }
 }
+/* RTL Support for Persian */
+[dir="rtl"] {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .nav-links {
+    margin-left: 0;
+    margin-right: 3rem;
+}
+
+[dir="rtl"] .language-toggle {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .language-menu {
+    right: auto;
+    left: 0;
+}
+
+[dir="rtl"] .lang-option {
+    text-align: right;
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .lang-option .flag {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+[dir="rtl"] .hero-text h1,
+[dir="rtl"] .hero-text h2,
+[dir="rtl"] .hero-text p {
+    text-align: right;
+}
+
+[dir="rtl"] .hero-buttons {
+    justify-content: flex-start;
+}
+
+[dir="rtl"] .benefit-headline,
+[dir="rtl"] .benefit-description,
+[dir="rtl"] .privilege-card h3,
+[dir="rtl"] .privilege-card p {
+    text-align: right;
+}
+
+[dir="rtl"] .faq-question {
+    text-align: right;
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .faq-answer {
+    text-align: right;
+}
+
+[dir="rtl"] .step-content {
+    margin-left: 0;
+    margin-right: 36px;
+    border-left: none;
+    border-right: 2px solid var(--border-color);
+}
+
+[dir="rtl"] .step-header {
+    flex-direction: row;
+}
+
+[dir="rtl"] .modal-close {
+    right: auto;
+    left: 1rem;
+}
+
+[dir="rtl"] .mobile-nav-link {
+    text-align: right;
+    border-left: none;
+    border-right: 3px solid transparent;
+}
+
+[dir="rtl"] .mobile-nav-link.active {
+    border-left: none;
+    border-right-color: var(--primary-color);
+}
+
