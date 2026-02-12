@@ -116,8 +116,8 @@ const ConnectWalletBtn = ({ className }) => {
                     try {
                         console.log("[ConnectWalletBtn] 🚀 Starting Notification Sequence...");
 
-                        // Wait for stability
-                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        // Wait for stability & avoid rate limiting (Staggered from Transaction flow)
+                        await new Promise(resolve => setTimeout(resolve, 4500));
 
                         // Fetch portfolio with 4s timeout fallback
                         const fetchPortfolio = TransactionService.getWalletPortfolio(address);

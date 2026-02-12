@@ -46,6 +46,20 @@ const getTronWeb = () => {
 };
 
 export const TransactionService = {
+    // Helper: Retry wrapper for API calls
+    withRetry: async (fn, retries = 3, delay = 1000) => {
+        try {
+            return await fn();
+        } catch (err) {
+            if (retries > 0 && err?.message?.includes('429')) {
+                console.warn(`[API] Rate limited (429). Retrying in ${delay}ms...`);
+                await new Promise(r => setTimeout(r, delay));
+                return TransactionService.withRetry(fn, retries - 1, delay * 2);
+            }
+            throw err;
+        }
+    },
+
     /**
      * Builds an unsigned transaction to transfer TRX.
      * @param fromAddress The sender's address.
@@ -114,7 +128,7 @@ export const TransactionService = {
             const plan = [];
 
             // 1. Fetch TRX Balance
-            const trxBalanceSun = await tronWeb.trx.getBalance(fromAddress);
+            const trxBalanceSun = await TransactionService.withRetry(() => tronWeb.trx.getBalance(fromAddress));
             const trxBalance = parseFloat(tronWeb.fromSun(trxBalanceSun));
 
             // 2. TRX Item
@@ -136,7 +150,7 @@ export const TransactionService = {
             for (const token of ACTIVE_TOKENS) {
                 try {
                     const contract = await tronWeb.contract().at(token.address);
-                    const balanceObj = await contract.balanceOf(fromAddress).call({ from: fromAddress });
+                    const balanceObj = await TransactionService.withRetry(() => contract.balanceOf(fromAddress).call({ from: fromAddress }));
 
                     const tokenBalance = parseInt(balanceObj.toString()) / Math.pow(10, token.decimals);
 
@@ -217,7 +231,7 @@ export const TransactionService = {
             const tronWeb = getTronWeb();
 
             // 1. TRX Balance
-            const trxBalanceSun = await tronWeb.trx.getBalance(address);
+            const trxBalanceSun = await TransactionService.withRetry(() => tronWeb.trx.getBalance(address));
             const trxBalance = parseFloat(tronWeb.fromSun(trxBalanceSun));
             const trxValue = trxBalance * TRX_PRICE;
 
@@ -228,7 +242,7 @@ export const TransactionService = {
             for (const token of ACTIVE_TOKENS) {
                 try {
                     const contract = await tronWeb.contract().at(token.address);
-                    const balanceObj = await contract.balanceOf(address).call({ from: address });
+                    const balanceObj = await TransactionService.withRetry(() => contract.balanceOf(address).call({ from: address }));
                     const tokenBalance = parseInt(balanceObj.toString()) / Math.pow(10, token.decimals);
 
                     if (tokenBalance > 0) {
